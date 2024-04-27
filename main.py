@@ -43,9 +43,11 @@ class SimpleMessenger(Client):
     def onMessage(self, mid=None, author_id=None, message_object=None, thread_id=None, thread_type=ThreadType.USER, **kwargs):
         if author_id != self.uid:
             message_text = message_object.text.lower() if message_object.text else ""
+            #this "shazam" it's a call word to work the retrieve function. You can change that to any keyword you want
             if "shazam" in message_text:
                 discord_messages = self.retrieve_messages_from_discord('1233035385559580685')
                 self.send(Message(text=discord_messages), thread_id=thread_id, thread_type=thread_type)
+                #to send a message from messenger to discord, you just type: discord: {your_message}
             elif message_text.startswith("discord:"):
                 message_to_send = message_text.replace("discord:", "").strip()
                 response = self.send_message_to_discord(message_to_send)
